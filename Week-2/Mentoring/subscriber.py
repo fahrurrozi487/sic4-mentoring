@@ -2,10 +2,10 @@ import paho.mqtt.client as paho
 from paho import mqtt
 import json
 broker = "mqtt-dashboard.com"
-port = 8883 #tls 
+port = 1883 #tls 
 timeout = 60
 
-topic = "mentor/angga/#"
+topic = "A"
 
 
 
@@ -20,8 +20,8 @@ def on_message(client, userdata, msg):
     print(f"M MQTT - > {messageMqtt}")
     print(f"Temperature : {messageMqtt['temperature']}")
 
-client = paho.Client("Contoh 2")
-client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+client = paho.Client("client 2")
+# client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 client.on_connect = on_connect #Callback
 client.on_message = on_message
 

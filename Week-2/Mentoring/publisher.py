@@ -9,6 +9,10 @@ broker = "mqtt-dashboard.com"
 port = 1883
 timeout = 60
 
+def ultrasonic():
+    #kodingan ultrasonic
+    data = 10
+    return data
 
 def createJson():
     presentDate = datetime.datetime.now()
@@ -27,7 +31,7 @@ def publishPeriod():
     while True:
         pay = createJson()
         print(pay)
-        client.publish("mentor/angga/week2",
+        client.publish("A",
                        payload=pay, qos=1, retain=False)
         time.sleep(10)
 

@@ -19,16 +19,6 @@ subscribe = "/v2.0/devices/mentoring/#"
 lampu = "/v2.0/devices/mentoring/lampu"
 kulkas = "/v2.0/devices/mentoring/kulkas"
 
-def getDataSensor1():
-    #codingan sensor
-    hasil_sensor = randint(0,100)
-    return hasil_sensor
-
-def getDataSensor2():
-    #codingan sensor
-    hasil_sensor = randint(0,100)
-    return hasil_sensor
-
 def menyalakanrelay(data_lampu):
     if(data_lampu == 1):
         print("menyalakan lampu")
@@ -57,26 +47,14 @@ def on_message(client, userdata, msg):
         data = json.loads(msg.payload.decode('utf-8'))
         menyalakan_kulkas(data['value'])
 
-
-def run():
-    while True:
-        sensor1 = getDataSensor1()
-        sensor2 = getDataSensor2()
-        json_temp = {'ultrasonik':sensor1,'temperature':sensor2}
-        payload = json.dumps(json_temp, indent=4)
-        client.publish(publish,payload,qos=1)
-        time.sleep(20)
-        
-
 client = paho.Client("Mentoring", userdata=None) #client ID tidakboleh sama
 client.username_pw_set(username=username, password=password)
 client.on_connect = on_connect
 client.on_publish = on_publish
 client.on_message = on_message
 client.connect(broker, port, timeout)
-# client.loop_forever()
-#menjalankan periodic pengiriman Data
-run()
+client.loop_forever()
+
 
 
 

@@ -2,12 +2,13 @@ import paho.mqtt.client as paho
 from paho import mqtt
 import time
 import random
+import json
 
 broker = "mqtt-dashboard.com"
 port = 1883
 timeout = 60
-topic = "mentor/angga/week9"
-
+data1 = "ta/angga/data1"
+data2 = "ta/angga/data2"
 
 def getRandom():
     #disini bisa di isi dengan sensor kalian -> Example 
@@ -20,14 +21,16 @@ def on_connect(client, userdata, flags, rc):
 
 def publishPeriod():
     while True:
-        getData = getRandom()
-        client.publish(topic, payload=getData, qos=1, retain=False)
-        time.sleep(1)
+        data = {'data1':getRandom(),'data2':getRandom()}
+        payload = json.dumps(data)
+        client.publish(data1, payload=getRandom(), qos=1, retain=False)
+        client.publish(data2, payload=getRandom(), qos=1, retain=False)
+        time.sleep(10)
 
 def run():
     publishPeriod()
 
-client = paho.Client("Contoh")  # Tidak Boleh Sama
+client = paho.Client("anggata")  # Tidak Boleh Sama
 # client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 client.on_connect = on_connect
 

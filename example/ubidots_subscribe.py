@@ -19,6 +19,8 @@ subscribe = "/v2.0/devices/mentoring/#"
 lampu = "/v2.0/devices/mentoring/lampu"
 kulkas = "/v2.0/devices/mentoring/kulkas"
 
+listrik = "/v2.0/devices/mentoring/listrik"
+
 def menyalakanrelay(data_lampu):
     if(data_lampu == 1):
         print("menyalakan lampu")
@@ -30,6 +32,14 @@ def menyalakan_kulkas(data_kulkas):
         print("menyalakan kulkas")
     else:
         print("mematikan kulkas")
+
+def menyalakan_listrik(data_Listrik):
+    if(data_Listrik == 1):
+        print("menyalakan Listrik")
+        #GPIO MENYALAKAN
+    else:
+        print("mematikan Listrik")
+        #GPIO MATIKAN
 
 def on_connect(client, userdata, flag, rc):
     print("Connected with result code "+str(rc))
@@ -46,6 +56,10 @@ def on_message(client, userdata, msg):
     elif(msg.topic == kulkas):
         data = json.loads(msg.payload.decode('utf-8'))
         menyalakan_kulkas(data['value'])
+    elif(msg.topic == listrik):
+        data = json.loads(msg.payload.decode('utf-8'))
+        menyalakan_listrik(data['value'])
+    
 
 client = paho.Client("Mentoring", userdata=None) #client ID tidakboleh sama
 client.username_pw_set(username=username, password=password)

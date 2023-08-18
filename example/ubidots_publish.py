@@ -24,7 +24,7 @@ username = 'BBFF-JwhfZjHhOhkAoH4jq2bcVAl2IEF76r'
 # username = ''
 password = ''
 # topic default "/v2.0/devices/label-devices"
-publish = "/v2.0/devices/sweet-unicorn"
+publish = "/v2.0/devices/mentoring"
 
 def measure_distance():
     # Send a short pulse to the trigger pin (10 microseconds)

@@ -3,6 +3,14 @@ from paho import mqtt
 import json
 from random import randint
 import time
+import RPi.GPIO as GPIO
+
+GPIO_LAMPU = 18
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+GPIO.setup(GPIO_LAMPU,GPIO.OUT)
 # define static variable
 # broker = "mqtt-dashboard.com"
 broker = "industrial.api.ubidots.com"
@@ -15,7 +23,7 @@ password = ''
 # topic default "/v2.0/devices/label-devices"
 publish = "/v2.0/devices/mentoring"
 subscribe = "/v2.0/devices/mentoring/#"
-# topic devices + label yang akan di suscribe
+# topic default "/v2.0/devices/label-devices/varibale-label"
 lampu = "/v2.0/devices/mentoring/lampu"
 kulkas = "/v2.0/devices/mentoring/kulkas"
 
@@ -24,8 +32,10 @@ listrik = "/v2.0/devices/mentoring/listrik"
 def menyalakanrelay(data_lampu):
     if(data_lampu == 1):
         print("menyalakan lampu")
+        GPIO.output(GPIO_LAMPU,GPIO.HIGH)
     else:
         print("mematikan lampu")
+        GPIO.output(GPIO_LAMPU,GPIO.LOW)
 
 def menyalakan_kulkas(data_kulkas):
     if(data_kulkas == 1):
@@ -49,7 +59,7 @@ def on_publish(client, userdata, result):
     print("data published \n")
 
 def on_message(client, userdata, msg):
-    # print("Topic :"+msg.topic+"\nMessage:"+str(msg.payload.decode('utf-8')))
+    print("Topic :"+msg.topic+"\nMessage:"+str(msg.payload.decode('utf-8')))
     if(msg.topic == lampu):
         data = json.loads(msg.payload.decode('utf-8'))
         menyalakanrelay(data['value'])
